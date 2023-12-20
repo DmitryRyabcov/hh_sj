@@ -7,7 +7,7 @@ class AbstractVacanciesAPI(ABC):
     """
 
     @abstractmethod
-    def get_vacancies(self, text):
+    def get_vacancies(self, params):
         pass
 
 
@@ -21,7 +21,7 @@ class AbstractJSONSaver(ABC):
         pass
 
     @abstractmethod
-    def get_vacancies_by_salary(self, salary):
+    def get_vacancies(self):
         pass
 
     @abstractmethod

@@ -1,7 +1,7 @@
 from src.vacancy import Vacancy
 
 
-def filter_vacancies(hh_vacancies, superjob_vacancies, filter_words):
+def filter_vacancies(hh_vacancies, sj_vacancies, filter_words):
     """
     Функция для фильтрации вакансий по ключевым словам
     """
@@ -15,11 +15,12 @@ def filter_vacancies(hh_vacancies, superjob_vacancies, filter_words):
                 except TypeError:
                     continue
 
-    for v in superjob_vacancies:
+    for v in sj_vacancies:
         for word in filter_words:
-            if word.lower() in v["profession"]:
-                vacancies.append(Vacancy(v["profession"], v["link"], v["payment_from"], v["candidat"]))
-    return vacancies
+            if word.lower() in v['profession'].lower():
+                if v ['payment_from'] == 0:
+                 vacancies.append(Vacancy(v["profession"], v["link"], v["payment_from"], v["candidat"]))
+    return vacancies.extend(vacancies)
 
 
 def sort_vacancies(filtered_vacancies):
