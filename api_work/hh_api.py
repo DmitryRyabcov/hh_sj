@@ -10,8 +10,14 @@ class HeadHunterAPI(AbstractVacanciesAPI):
     def __init__(self):
         self.url = "https://api.hh.ru/vacancies"
 
-    def get_vacancies(self, params):
+    def get_vacancies(self, name):
+        params = {
+            "name": name,
+            "area": 113,
+            "per_page": 100
+        }
         response = requests.get(self.url, params=params)
+        vacancies = response.json()
         if not response.status_code == HTTPStatus.OK:
             return f'Ошибка! Статус-код: {response.status_code}'
-        return response.json()['items']
+        return vacancies["items"]

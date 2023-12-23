@@ -17,10 +17,9 @@ def filter_vacancies(hh_vacancies, sj_vacancies, filter_words):
 
     for v in sj_vacancies:
         for word in filter_words:
-            if word.lower() in v['profession'].lower():
-                if v ['payment_from'] == 0:
+            if word.lower() in v["profession"]:
                  vacancies.append(Vacancy(v["profession"], v["link"], v["payment_from"], v["candidat"]))
-    return vacancies.extend(vacancies)
+    return vacancies
 
 
 def sort_vacancies(filtered_vacancies):
@@ -28,7 +27,6 @@ def sort_vacancies(filtered_vacancies):
     Функция для сортировки списка вакансий по зарплате
     """
     return sorted(filtered_vacancies, key=lambda v: v.salary or 0, reverse=True)
-
 
 def get_top_vacancies(sorted_vacancies, top_n):
     """

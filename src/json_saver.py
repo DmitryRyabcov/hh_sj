@@ -1,6 +1,6 @@
 import json
 from api_work.abstract_api import AbstractJSONSaver
-
+from src.vacancy import Vacancy
 
 class JSONSaver(AbstractJSONSaver):
     """
@@ -15,21 +15,30 @@ class JSONSaver(AbstractJSONSaver):
         """
         Добавляет класс вакансии в vacancies.json
         """
-        with open(self.filename, "w", encoding='UTF-8') as file:
-            json.dump(vacancy, file, indent=2, ensure_ascii=False)
+        try:
+            with open(self.fiename, 'r', encoding='UTF-8') as file:
+                data = json.load(file)
+        except json.decoder.JSONDecodeError:
+            data = []
 
-    def get_vacancies(self):
+        data.append(vars(vacancy))
+
+        with open(self.filename, "w", encoding='UTF-8') as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
+
+    def get_vacancies(self, salary):
         """
         Возвращает список вакансий по указанной зарплате
         """
         with open(self.filename, 'w', encoding='utf-8') as file:
-            return json.load(file)
-
+            salaries = json.load(file)
+            matching_vacancies = [vacancy for vacancy in salaries if vacancy["salary"] == salary]
+            return [Vacancy(**vacancy) for vacancy in matching_vacancies]
     def delete_vacancy(self, vacancy):
         """
         Удаление класса вакансии из vacancies.json
         """
-        with open("vacancies.json", "w", encoding="UTF-8") as file:
+        with open("vacancies.json", "r", encoding="UTF-8") as file:
             vacancies = json.load(file)
 
         undel_vacancies = [obj for obj in vacancies if obj["url"] != vars(vacancy)["url"]]
