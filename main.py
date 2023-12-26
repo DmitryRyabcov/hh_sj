@@ -15,6 +15,7 @@ def user_interaction():
     hh_vacancies = hh_api.get_vacancies(filter_words)
     sj_vacancies = sj_api.get_vacancies(filter_words)
     filtered_vacancies = filter_vacancies(hh_vacancies, sj_vacancies, filter_words)
+    json_saver  = JSONSaver
 
     if not filtered_vacancies:
         print("Нет вакансий, соответствующих заданным критериям.")
@@ -23,6 +24,7 @@ def user_interaction():
     sorted_vacancies = sort_vacancies(filtered_vacancies)
     top_vacancies = get_top_vacancies(sorted_vacancies, top_n)
     print_vacancies(top_vacancies)
+    json_saver.add_vacancy(hh_vacancies, sj_vacancies)
 
 
 if __name__ == '__main__':
